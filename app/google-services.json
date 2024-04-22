@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "736206924636",
+    "project_id": "cinema-web-mobil-4d142",
+    "storage_bucket": "cinema-web-mobil-4d142.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:736206924636:android:f4a0ccc0a89f30d67eef99",
+        "android_client_info": {
+          "package_name": "hu.inf.szte"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8oTxE4shPI9RKD9WfL1GzI3nRqjno-lE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

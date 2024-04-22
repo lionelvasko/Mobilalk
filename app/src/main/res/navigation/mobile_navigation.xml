@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_movies">
+
+    <fragment
+        android:id="@+id/nav_movies"
+        android:name="hu.inf.szte.ui.movies.MoviesFragment"
+        android:label="@string/menu_movies"
+        tools:layout="@layout/fragment_movies" />
+
+    <fragment
+        android:id="@+id/nav_add_movie"
+        android:name="hu.inf.szte.ui.movies.AddMovieFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_addmovie" />
+
+    <fragment
+        android:id="@+id/nav_shows"
+        android:name="hu.inf.szte.ui.shows.ShowsFragment"
+        android:label="@string/menu_shows"
+        tools:layout="@layout/fragment_shows" />
+
+    <fragment
+        android:id="@+id/nav_add_show"
+        android:name="hu.inf.szte.ui.shows.AddShowFragment"
+        android:label="@string/menu_add_show"
+        tools:layout="@layout/fragment_addshow" />
+
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="hu.inf.szte.ui.login.LoginFragment"
+        android:label="@string/menu_login"
+        tools:layout="@layout/fragment_login" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="hu.inf.szte.ui.profile.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/nav_register"
+        android:name="hu.inf.szte.ui.register.RegisterFragment"
+        android:label="@string/menu_register"
+        tools:layout="@layout/fragment_register" />
+
+    <fragment
+        android:id="@+id/nav_mytickets"
+        android:name="hu.inf.szte.ui.mytickets.TicketsFragment"
+        android:label="@string/menu_tickets"
+        tools:layout="@layout/fragment_mytickets" />
+
+
+
+</navigation>

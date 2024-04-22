@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_movies"
+            android:icon="@drawable/movie"
+            android:title="@string/menu_movies" />
+        <item
+            android:id="@+id/nav_add_movie"
+            android:icon="@drawable/movie_plus"
+            android:title="@string/menu_add_movie" />
+        <item
+            android:id="@+id/nav_shows"
+            android:icon="@drawable/video_vintage"
+            android:title="@string/menu_shows" />
+        <item
+            android:id="@+id/nav_add_show"
+            android:icon="@drawable/folder_play"
+            android:title="@string/menu_add_show" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/account_box"
+            android:title="@string/menu_profile" />
+        <item
+            android:id="@+id/nav_mytickets"
+            android:icon="@drawable/ticket"
+            android:title="@string/tickets" />
+        <item
+            android:id="@+id/nav_register"
+            android:icon="@drawable/account_plus"
+            android:title="@string/menu_register" />
+        <item
+            android:id="@+id/nav_login"
+            android:icon="@drawable/login"
+            android:title="@string/menu_login" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/logout_variant"
+            android:title="@string/menu_logout" />
+    </group>
+</menu>
