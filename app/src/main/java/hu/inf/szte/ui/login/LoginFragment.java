@@ -59,6 +59,23 @@ public class LoginFragment extends Fragment {
             });
         });
 
+        final Button forgotPasswordButton = binding.forgotPassword;
+
+        forgotPasswordButton.setOnClickListener(v -> {
+            String email = emailEditText.getText().toString();
+            if (!email.isEmpty()) {
+                loginViewModel.sendPasswordResetEmail(email, task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(getContext(), "Password reset email sent.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "Failed to send password reset email.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Toast.makeText(getContext(), "Please enter your email.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return root;
     }
 

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.Menu;
 import com.google.android.gms.tasks.Continuation;
@@ -146,33 +147,45 @@ public class MainActivity extends AppCompatActivity {
         userNameTextView.setText("");
 
         updateNavigationViewMenu();
-
+        updateUserInfo(); // Add this line
     }
 
     public void updateUserInfo() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        // Get the NavigationView
+        NavigationView navigationView = findViewById(R.id.nav_view);
+
+        // Get the header view at position 0
+        View headerView = navigationView.getHeaderView(0);
+        ImageView imageView = headerView.findViewById(R.id.imageView);
+
         if (user != null) {
             Task<UserInfo> userInfoTask = getUserInfo(user);
             if (userInfoTask != null) {
                 userInfoTask.addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         UserInfo userInfo = task.getResult();
-                        // Get the NavigationView
-                        NavigationView navigationView = findViewById(R.id.nav_view);
-
-                        // Get the header view at position 0
-                        View headerView = navigationView.getHeaderView(0);
-                        TextView userEmailTextView = headerView.findViewById(R.id.user_email);
-                        TextView userNameTextView = headerView.findViewById(R.id.user_name);
 
                         // Set the TextViews
+                        TextView userEmailTextView = headerView.findViewById(R.id.user_email);
+                        TextView userNameTextView = headerView.findViewById(R.id.user_name);
                         userEmailTextView.setText(userInfo.email);
                         userNameTextView.setText(userInfo.name);
+
+                        // Set the ImageView's resource to @drawable/ticket_account
+                        imageView.setImageResource(R.drawable.ticket_account);
                     } else {
                         Log.d("TAG", "get failed with ", task.getException());
                     }
                 });
             }
+        } else {
+            // Set the ImageView's resource to @drawable/account_question_outline
+            imageView.setImageResource(R.drawable.account_question_outline);
+
+            // Get the header view at position 0
+            TextView userEmailTextView = headerView.findViewById(R.id.user_email);
+             userEmailTextView.setText("Guest");
         }
     }
 

@@ -17,4 +17,8 @@ public class LoginViewModel extends ViewModel {
     public void authenticateUser(String email, String password, OnCompleteListener<AuthResult> listener) {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(listener);
     }
+
+    public void sendPasswordResetEmail(String email, OnCompleteListener<Void> listener) {
+        mAuth.sendPasswordResetEmail(email).addOnCompleteListener(listener);
+    }
 }

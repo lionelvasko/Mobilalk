@@ -1,31 +1,43 @@
 package hu.inf.szte.model;
 
+import com.google.type.Date;
+
 public class Movie {
     private final String name;
-    private final String genre;
-    private final int year;
+    private final Integer duration;
+    private final String picture;
 
-    public Movie(String name, String genre, int year) {
+    private final Date releaseDate;
+
+    public Movie(String name, Integer duration, String picture, Date releaseDate) {
         this.name = name;
-        this.genre = genre;
-        this.year = year;
+        this.duration = duration;
+        this.picture = picture;
+        this.releaseDate = releaseDate;
     }
 
     public Movie() {
         this.name = "";
-        this.genre = "";
-        this.year = 0;
+        this.duration = 0;
+        this.picture = "";
+        this.releaseDate = null;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getGenre() {
-        return genre;
+    public Integer getDuration() {
+        return duration;
     }
 
-    public int getYear() {
-        return year;
+    public String getPicture() {
+        return picture;
     }
+
+    public Date getReleaseDate() {
+        return releaseDate;
+    }
+
+
 }
