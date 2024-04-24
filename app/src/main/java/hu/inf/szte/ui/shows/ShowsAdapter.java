@@ -35,7 +35,7 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ShowViewHold
 
         public void bind(Show show) {
             showMovieTextView.setText(show.getMovie());
-            showDatetimeTextView.setText(show.getDatetime());
+            showDatetimeTextView.setText(show.getDatetime().toString());
         }
 
         public ShowViewHolder(ShowItemBinding binding, OnShowClickListener listener) {
@@ -61,10 +61,6 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ShowViewHold
     public ShowsAdapter(OnShowClickListener listener) {
         this.shows = new ArrayList<>();
         this.listener = listener;
-    }
-
-    public ShowsAdapter() {
-        this.shows = new ArrayList<>();
     }
 
     public void setShows(List<Show> shows) {

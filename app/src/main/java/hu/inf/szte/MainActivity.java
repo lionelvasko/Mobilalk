@@ -10,6 +10,7 @@ import android.view.Menu;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -212,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
                             ArrayList<Ticket> tickets = new ArrayList<>();
                             if (ticketsData != null) {
                                 for (HashMap<String, Object> ticketData : ticketsData) {
-                                    Date date = (Date) ticketData.get("date");
+                                    Timestamp date = (Timestamp) ticketData.get("date");
                                     String movie = (String) ticketData.get("movie");
                                     ArrayList<Long> seats = (ArrayList<Long>) ticketData.get("seats");
                                     tickets.add(new Ticket(date, movie, seats));

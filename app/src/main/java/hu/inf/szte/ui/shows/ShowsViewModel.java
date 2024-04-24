@@ -33,6 +33,7 @@ public class ShowsViewModel extends ViewModel {
                         List<Show> showList = new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Show show = document.toObject(Show.class);
+                            show.setId(document.getId()); // Set the id of the Show object to the document's ID
                             showList.add(show);
                         }
                         shows.setValue(showList);

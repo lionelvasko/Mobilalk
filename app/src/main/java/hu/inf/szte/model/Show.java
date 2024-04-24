@@ -2,29 +2,34 @@ package hu.inf.szte.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Show  implements Serializable {
-    private final String movie;
-    private final String datetime;
-    private final ArrayList<Boolean> seats;
 
-    public Show(String movie, String datetime, ArrayList<Boolean> seats) {
+    private String id;
+    private final String movie;
+    private final Date datetime; // Changed from Timestamp to Date
+    private ArrayList<Boolean> seats;
+
+    public Show(String id, String movie, Date datetime, ArrayList<Boolean> seats) { // Changed from Timestamp to Date
+        this.id = id;
         this.movie = movie;
         this.datetime = datetime;
         this.seats = seats;
     }
 
-    public Show(){
+    public Show() {
+        this.id = "";
         this.movie = "";
-        this.datetime = "";
-        this.seats = new ArrayList<>();
+        this.datetime = null;
+        this.seats = null;
     }
 
     public String getMovie() {
         return movie;
     }
 
-    public String getDatetime() {
+    public Date getDatetime() { // Changed from Timestamp to Date
         return datetime;
     }
 
@@ -50,4 +55,16 @@ public class Show  implements Serializable {
         return seats.size() - getFreeSeats();
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+       this.id = id;
+    }
+
+    public void setSeats(ArrayList<Boolean> seats) {
+        this.seats = new ArrayList<>();
+        this.seats.addAll(seats);
+    }
 }

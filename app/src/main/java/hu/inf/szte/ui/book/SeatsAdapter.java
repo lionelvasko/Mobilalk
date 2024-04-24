@@ -20,6 +20,21 @@ public class SeatsAdapter extends RecyclerView.Adapter<SeatsAdapter.SeatViewHold
     private List<Boolean> selectedSeats;
     private OnSeatClickListener onSeatClickListener;
 
+    public List<Integer> getSelectedSeats() {
+        List<Integer> selected = new ArrayList<>();
+        for (int i = 0; i < selectedSeats.size(); i++) {
+            if (selectedSeats.get(i)) {
+                selected.add(i);
+            }
+        }
+        return selected;
+    }
+
+    public void updateSeats(List<Boolean> newSeats) {
+        seats = newSeats;
+        notifyDataSetChanged();
+    }
+
     public interface OnSeatClickListener {
         void onSeatClick(int position);
     }
@@ -72,6 +87,10 @@ public class SeatsAdapter extends RecyclerView.Adapter<SeatsAdapter.SeatViewHold
 
     public void selectSeat(int position) {
         selectedSeats.set(position, !selectedSeats.get(position));
+        // If the seat is selected, set its data to false
+        if (selectedSeats.get(position)) {
+            seats.set(position, false);
+        }
         notifyItemChanged(position);
     }
 }
