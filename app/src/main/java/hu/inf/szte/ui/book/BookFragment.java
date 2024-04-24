@@ -1,12 +1,15 @@
 package hu.inf.szte.ui.book;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.Serializable;
 
@@ -34,6 +37,20 @@ public class BookFragment extends Fragment {
         assert getArguments() != null;
         Show show = (Show) getArguments().getSerializable(ARG_SHOW);
 
+        if (show.getSeats() == null) {
+            Log.e("BookFragment", "Seats is null");
+        } else {
+            // Set up RecyclerView with SeatsAdapter
+            RecyclerView seatsRecyclerView = view.findViewById(R.id.seats_recycler_view);
+            seatsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
+            SeatsAdapter seatsAdapter = new SeatsAdapter(show.getSeats());
+            seatsAdapter.setOnSeatClickListener(position -> {
+                // Handle seat click
+                seatsAdapter.selectSeat(position);
+            });
+            seatsRecyclerView.setAdapter(seatsAdapter);
+        }
+
         // Find the TextViews
         TextView showNameTextView = view.findViewById(R.id.show_name);
         TextView showDatetimeTextView = view.findViewById(R.id.show_datetime);
@@ -42,8 +59,6 @@ public class BookFragment extends Fragment {
         showNameTextView.setText(show.getMovie());
         showDatetimeTextView.setText(show.getDatetime().toString());
 
-        // Create as many rectangles as the show has
-        // ...
 
         return view;
     }
