@@ -15,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -22,6 +23,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import hu.inf.szte.R;
 import hu.inf.szte.model.Show;
@@ -58,7 +60,7 @@ public class BookFragment extends Fragment {
 
 
         db = FirebaseFirestore.getInstance();
-        
+
         assert show != null;
         if (show.getSeats() == null) {
             seatsAdapter = null;
@@ -94,19 +96,19 @@ public class BookFragment extends Fragment {
             showData.put("movie", show.getMovie());
             showData.put("date", show.getDatetime());
             showData.put("seats", show.getSeats());
-            Log.i("BookFragment", "DocID: " + show.getId());
-            Log.i("BookFragment", "Selected seats: " + selectedSeats.toString());
             db.collection("shows").document(show.getId())
                     .update(showData);
 
             // Update the user's tickets in Firestore
             // Replace "userId" with the actual user's ID
             Map<String, Object> ticketData = new HashMap<>();
-            ticketData.put("date", show.getDatetime().toString());
+            ticketData.put("date", show.getDatetime()   );
             ticketData.put("movie", show.getMovie());
             ticketData.put("seats", selectedSeats);
-            db.collection("users").document("userId")
+            String currentUserId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+            db.collection("users").document(currentUserId)
                     .update("tickets", FieldValue.arrayUnion(ticketData));
+
 
             new AlertDialog.Builder(getContext())
                     .setTitle("Booking Successful")

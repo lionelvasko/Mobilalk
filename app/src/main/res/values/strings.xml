@@ -28,4 +28,5 @@
     <string name="menu_tickets">Tickets</string>
     <string name="forgot_password">Forgot password</string>
     <string name="book">Book</string>
+    <string name="update">Update</string>
 </resources>
