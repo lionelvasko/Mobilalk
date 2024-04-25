@@ -17,6 +17,14 @@
             android:adjustViewBounds="true"
             android:scaleType="fitCenter" />
 
+        <ImageButton
+            android:id="@+id/delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/delete_empty"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/movie_title"
             android:layout_width="match_parent"

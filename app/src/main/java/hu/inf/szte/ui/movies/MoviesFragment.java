@@ -30,7 +30,7 @@ public class MoviesFragment extends Fragment {
         int spanCount = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 1;
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), spanCount);
         recyclerView.setLayoutManager(layoutManager);
-        MovieAdapter adapter = new MovieAdapter();
+        MovieAdapter adapter = new MovieAdapter(moviesViewModel);
         recyclerView.setAdapter(adapter);
 
         // Update the RecyclerView

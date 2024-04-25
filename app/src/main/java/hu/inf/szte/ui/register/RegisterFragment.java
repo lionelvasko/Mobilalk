@@ -16,6 +16,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -90,7 +91,28 @@ public class RegisterFragment extends Fragment {
 
                     requireActivity().invalidateOptionsMenu();
                 } else {
-                    Toast.makeText(getContext(), "Registration failed. Please check your data and try again.", Toast.LENGTH_LONG).show();
+                    // Get the exception from the task
+                    Exception e = task.getException();
+                    String errorMessage = "Registration failed. Please check your data and try again.";
+
+                    if (e instanceof FirebaseAuthException) {
+                        String errorCode = ((FirebaseAuthException) e).getErrorCode();
+
+                        switch (errorCode) {
+                            case "ERROR_INVALID_EMAIL":
+                                errorMessage = "The email address is badly formatted.";
+                                break;
+                            case "ERROR_EMAIL_ALREADY_IN_USE":
+                                errorMessage = "The email address is already in use by another account.";
+                                break;
+                            case "ERROR_WEAK_PASSWORD":
+                                errorMessage = "The password is not strong enough.";
+                                break;
+
+                        }
+                    }
+
+                    Toast.makeText(getContext(), errorMessage, Toast.LENGTH_LONG).show();
                 }
             });
         });

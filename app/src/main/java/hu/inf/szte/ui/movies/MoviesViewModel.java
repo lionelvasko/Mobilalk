@@ -33,12 +33,23 @@ public class MoviesViewModel extends ViewModel {
                         List<Movie> movieList = new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Movie movie = document.toObject(Movie.class);
+                            movie.setId(document.getId()); // Set the id of the movie with the document ID
                             movieList.add(movie);
                         }
                         movies.setValue(movieList);
                     } else {
                         // Handle the error
                     }
+                });
+    }
+
+    public void deleteMovie(String movieId) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("movies").document(movieId)
+                .delete()
+                .addOnSuccessListener(aVoid -> fetchMovies())
+                .addOnFailureListener(e -> {
+                    // Handle the error
                 });
     }
 }
