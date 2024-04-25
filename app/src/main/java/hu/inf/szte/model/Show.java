@@ -1,17 +1,22 @@
 package hu.inf.szte.model;
 
+import android.media.tv.TimelineRequest;
+
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.Exclude;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Show  implements Serializable {
+public class Show implements Serializable {
 
     private String id;
     private final String movie;
-    private final Date datetime; // Changed from Timestamp to Date
+    private final Date datetime;
     private ArrayList<Boolean> seats;
 
-    public Show(String id, String movie, Date datetime, ArrayList<Boolean> seats) { // Changed from Timestamp to Date
+    public Show(String id, String movie, Date datetime, ArrayList<Boolean> seats) {
         this.id = id;
         this.movie = movie;
         this.datetime = datetime;
@@ -25,11 +30,17 @@ public class Show  implements Serializable {
         this.seats = null;
     }
 
+    public Show(String name, Date date, ArrayList<Boolean> seatNumber) {
+        this.movie = name;
+        this.datetime = date;
+        this.seats = seatNumber;
+    }
+
     public String getMovie() {
         return movie;
     }
 
-    public Date getDatetime() { // Changed from Timestamp to Date
+    public Date getDatetime() {
         return datetime;
     }
 
@@ -55,12 +66,14 @@ public class Show  implements Serializable {
         return seats.size() - getFreeSeats();
     }
 
+    @Exclude
     public String getId() {
         return id;
     }
 
+    @Exclude
     public void setId(String id) {
-       this.id = id;
+        this.id = id;
     }
 
     public void setSeats(ArrayList<Boolean> seats) {
