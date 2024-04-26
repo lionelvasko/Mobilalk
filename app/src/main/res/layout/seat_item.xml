@@ -21,6 +21,17 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1" />
 
+        <TextView
+            android:id="@+id/seat_index"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/rectangle_view"
+            app:layout_constraintEnd_toEndOf="@id/rectangle_view"
+            app:layout_constraintStart_toStartOf="@id/rectangle_view"
+            app:layout_constraintTop_toTopOf="@id/rectangle_view" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

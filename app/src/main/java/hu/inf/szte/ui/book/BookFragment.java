@@ -1,6 +1,7 @@
 package hu.inf.szte.ui.book;
 
 import android.app.AlertDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -85,39 +86,48 @@ public class BookFragment extends Fragment {
 
         // Find the Book button
         Button bookButton = view.findViewById(R.id.book_button);
-        // Set a click listener on the Book button
-        bookButton.setOnClickListener(v -> {
-            // Get the selected seats
-            assert seatsAdapter != null;
-            List<Integer> selectedSeats = seatsAdapter.getSelectedSeats();
 
-            // Update the show data in Firestore
-            Map<String, Object> showData = new HashMap<>();
-            showData.put("movie", show.getMovie());
-            showData.put("date", show.getDatetime());
-            showData.put("seats", show.getSeats());
-            db.collection("shows").document(show.getId())
-                    .update(showData);
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
 
-            // Update the user's tickets in Firestore
-            // Replace "userId" with the actual user's ID
-            Map<String, Object> ticketData = new HashMap<>();
-            ticketData.put("date", show.getDatetime()   );
-            ticketData.put("movie", show.getMovie());
-            ticketData.put("seats", selectedSeats);
-            String currentUserId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-            db.collection("users").document(currentUserId)
-                    .update("tickets", FieldValue.arrayUnion(ticketData));
-
-
-            new AlertDialog.Builder(getContext())
-                    .setTitle("Booking Successful")
-                    .setMessage("Your booking has been successful!")
+            // Show a popup when the button is clicked
+            bookButton.setOnClickListener(v -> new AlertDialog.Builder(getContext())
+                    .setTitle("Sign In Required")
+                    .setMessage("For booking you have to sign in")
                     .setPositiveButton("OK", null)
-                    .show();
-        });
+                    .show());
+        }
+        else{
+            bookButton.setOnClickListener(v -> {
+                // Get the selected seats
+                assert seatsAdapter != null;
+                List<Integer> selectedSeats = seatsAdapter.getSelectedSeats();
+
+                // Update the show data in Firestore
+                Map<String, Object> showData = new HashMap<>();
+                showData.put("movie", show.getMovie());
+                showData.put("date", show.getDatetime());
+                showData.put("seats", show.getSeats());
+                db.collection("shows").document(show.getId())
+                        .update(showData);
+
+                // Update the user's tickets in Firestore
+                // Replace "userId" with the actual user's ID
+                Map<String, Object> ticketData = new HashMap<>();
+                ticketData.put("date", show.getDatetime()   );
+                ticketData.put("movie", show.getMovie());
+                ticketData.put("seats", selectedSeats);
+                String currentUserId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+                db.collection("users").document(currentUserId)
+                        .update("tickets", FieldValue.arrayUnion(ticketData));
 
 
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Booking Successful")
+                        .setMessage("Your booking has been successful!")
+                        .setPositiveButton("OK", null)
+                        .show();
+            });
+        }
 
         return view;
     }

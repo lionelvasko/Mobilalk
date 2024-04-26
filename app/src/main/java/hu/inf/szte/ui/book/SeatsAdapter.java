@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,8 @@ public class SeatsAdapter extends RecyclerView.Adapter<SeatsAdapter.SeatViewHold
 
     private List<Boolean> seats;
     private List<Boolean> selectedSeats;
+
+    private List<Boolean> bookedSeats;
     private OnSeatClickListener onSeatClickListener;
 
     public List<Integer> getSelectedSeats() {
@@ -57,6 +60,7 @@ public class SeatsAdapter extends RecyclerView.Adapter<SeatsAdapter.SeatViewHold
     public SeatsAdapter(List<Boolean> seats) {
         this.seats = seats;
         this.selectedSeats = new ArrayList<>(Collections.nCopies(seats.size(), false));
+        this.bookedSeats = new ArrayList<>(Collections.nCopies(seats.size(), false)); // Initialize bookedSeats with false
     }
 
     public void setOnSeatClickListener(OnSeatClickListener listener) {
@@ -73,10 +77,17 @@ public class SeatsAdapter extends RecyclerView.Adapter<SeatsAdapter.SeatViewHold
     @Override
     public void onBindViewHolder(SeatViewHolder holder, int position) {
         Boolean seat = seats.get(position);
-        if (seat) {
-            holder.rectangleView.setBackgroundColor(selectedSeats.get(position) ? Color.BLUE : Color.GREEN);
+        TextView seatIndexTextView = holder.itemView.findViewById(R.id.seat_index);
+        seatIndexTextView.setText(String.valueOf(position));
+
+        if (seat && !bookedSeats.get(position)) { // Check bookedSeats to determine whether to disable the click listener
+            boolean isSelected = selectedSeats.get(position);
+            holder.rectangleView.setBackgroundColor(isSelected ? Color.BLUE : Color.GREEN);
+            seatIndexTextView.setTextColor(isSelected ? Color.WHITE : Color.BLACK);
+            holder.itemView.setOnClickListener(v -> onSeatClickListener.onSeatClick(position));
         } else {
             holder.rectangleView.setBackgroundColor(Color.RED);
+            holder.itemView.setOnClickListener(null); // Disable click listener for reserved seats
         }
     }
 
@@ -87,9 +98,9 @@ public class SeatsAdapter extends RecyclerView.Adapter<SeatsAdapter.SeatViewHold
 
     public void selectSeat(int position) {
         selectedSeats.set(position, !selectedSeats.get(position));
-        // If the seat is selected, set its data to false
+        // If the seat is selected, set its data to true
         if (selectedSeats.get(position)) {
-            seats.set(position, false);
+            bookedSeats.set(position, true); // Set the corresponding value in bookedSeats to true when a seat is booked
         }
         notifyItemChanged(position);
     }
