@@ -28,6 +28,7 @@ import java.util.Objects;
 
 import hu.inf.szte.R;
 import hu.inf.szte.model.Show;
+import hu.inf.szte.ui.register.RegisterFragment;
 
 public class BookFragment extends Fragment {
 
@@ -102,11 +103,15 @@ public class BookFragment extends Fragment {
                 assert seatsAdapter != null;
                 List<Integer> selectedSeats = seatsAdapter.getSelectedSeats();
 
+                for (Integer seat : selectedSeats) {
+                    show.getSeats().set(seat, false); // Set the selected seats to false (booked)
+                }
+
                 // Update the show data in Firestore
                 Map<String, Object> showData = new HashMap<>();
                 showData.put("movie", show.getMovie());
                 showData.put("date", show.getDatetime());
-                showData.put("seats", show.getSeats());
+                showData.put("seats", show.getSeats()); // This now includes the booked seats
                 db.collection("shows").document(show.getId())
                         .update(showData);
 

@@ -6,6 +6,10 @@ import androidx.lifecycle.ViewModel;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import hu.inf.szte.model.Profile;
 
 public class ProfileViewModel extends ViewModel {
@@ -35,8 +39,13 @@ public class ProfileViewModel extends ViewModel {
 
     public void updateUser(Profile userdata) {
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Map<String, Object> userDataMap = new HashMap<>();
+        userDataMap.put("email", userdata.getEmail());
+        userDataMap.put("name", userdata.getName());
+        userDataMap.put("phone", userdata.getPhone());
+        userDataMap.put("address", userdata.getAddress());
         db.collection("users").document(currentUserId)
-                .set(userdata)
+                .update(userDataMap)
                 .addOnSuccessListener(aVoid -> {
                     // Handle success
                 })

@@ -80,15 +80,20 @@ public class SeatsAdapter extends RecyclerView.Adapter<SeatsAdapter.SeatViewHold
         TextView seatIndexTextView = holder.itemView.findViewById(R.id.seat_index);
         seatIndexTextView.setText(String.valueOf(position));
 
-        if (seat && !bookedSeats.get(position)) { // Check bookedSeats to determine whether to disable the click listener
+        if (seat) { // Check if the seat is available
             boolean isSelected = selectedSeats.get(position);
             holder.rectangleView.setBackgroundColor(isSelected ? Color.BLUE : Color.GREEN);
             seatIndexTextView.setTextColor(isSelected ? Color.WHITE : Color.BLACK);
-            holder.itemView.setOnClickListener(v -> onSeatClickListener.onSeatClick(position));
         } else {
             holder.rectangleView.setBackgroundColor(Color.RED);
-            holder.itemView.setOnClickListener(null); // Disable click listener for reserved seats
         }
+
+        // Always set the OnClickListener for the itemView
+        holder.itemView.setOnClickListener(v -> {
+            if (seat && !bookedSeats.get(position)) { // Only trigger the OnClickListener if the seat is available and not booked
+                onSeatClickListener.onSeatClick(position);
+            }
+        });
     }
 
     @Override
@@ -97,11 +102,8 @@ public class SeatsAdapter extends RecyclerView.Adapter<SeatsAdapter.SeatViewHold
     }
 
     public void selectSeat(int position) {
+        // Toggle the selection status of the seat
         selectedSeats.set(position, !selectedSeats.get(position));
-        // If the seat is selected, set its data to true
-        if (selectedSeats.get(position)) {
-            bookedSeats.set(position, true); // Set the corresponding value in bookedSeats to true when a seat is booked
-        }
         notifyItemChanged(position);
     }
 }

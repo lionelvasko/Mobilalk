@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.ViewUtils;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -48,8 +49,14 @@ public class RegisterFragment extends Fragment {
         final EditText phoneEditText = binding.phone;
         final EditText addressEditText = binding.address;
         final Button registerButton = binding.register;
+        final Button loginButton = binding.login;
 
         db = FirebaseFirestore.getInstance();
+
+        loginButton.setOnClickListener(v -> {
+            NavHostFragment.findNavController(RegisterFragment.this)
+                    .navigate(R.id.nav_login);
+        });
 
         registerButton.setOnClickListener(v -> {
             String email = usernameEditText.getText().toString();

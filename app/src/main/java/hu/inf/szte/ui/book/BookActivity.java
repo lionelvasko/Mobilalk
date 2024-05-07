@@ -21,4 +21,5 @@ public class BookActivity extends AppCompatActivity {
                 .replace(R.id.fragment_container, bookFragment)
                 .commit();
     }
+
 }
