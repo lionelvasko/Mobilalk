@@ -22,6 +22,7 @@ public class MoviesFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         MoviesViewModel moviesViewModel =
                 new ViewModelProvider(this).get(MoviesViewModel.class);
+        moviesViewModel.fetchUserAdminStatus();
 
         binding = FragmentMoviesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -30,7 +31,7 @@ public class MoviesFragment extends Fragment {
         int spanCount = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 1;
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), spanCount);
         recyclerView.setLayoutManager(layoutManager);
-        MovieAdapter adapter = new MovieAdapter(moviesViewModel);
+        MovieAdapter adapter = new MovieAdapter(moviesViewModel, getViewLifecycleOwner());
         recyclerView.setAdapter(adapter);
 
         // Update the RecyclerView

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -26,6 +27,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     private List<Movie> movies;
     private MoviesViewModel viewModel;
+    private LifecycleOwner lifecycleOwner;
 
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
         private final MovieItemBinding binding;
@@ -41,7 +43,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             this.deleteButton = binding.deleteButton;
         }
 
-        public void bind(Movie movie, MoviesViewModel viewModel) {
+        public void bind(Movie movie, MoviesViewModel viewModel, LifecycleOwner lifecycleOwner) {
             movieTitle.setText(movie.getName());
 
             // Use Picasso to load the image from the URL
@@ -57,6 +59,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 Log.i("MovieAdapter", movie.getPicture());
             }
 
+            if (viewModel.getIsAdmin().getValue() != null) {
+                viewModel.getIsAdmin().observe(lifecycleOwner, isAdmin -> {
+                    if (isAdmin) {
+                        deleteButton.setVisibility(View.VISIBLE);
+                    } else {
+                        deleteButton.setVisibility(View.GONE);
+                    }
+                });
+            }else{
+                deleteButton.setVisibility(View.GONE);
+            }
+
             deleteButton.setOnClickListener(v -> {
                 new AlertDialog.Builder(v.getContext())
                         .setTitle("Delete Confirmation")
@@ -69,9 +83,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         }
     }
 
-    public MovieAdapter(MoviesViewModel viewModel) {
+    public MovieAdapter(MoviesViewModel viewModel, LifecycleOwner lifecycleOwner) {
         this.movies = new ArrayList<>();
         this.viewModel = viewModel;
+        this.lifecycleOwner = lifecycleOwner;
     }
 
     public void setMovies(List<Movie> movies) {
@@ -89,7 +104,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
-        holder.bind(movies.get(position), viewModel);
+        holder.bind(movies.get(position), viewModel, lifecycleOwner);
     }
 
     @Override
