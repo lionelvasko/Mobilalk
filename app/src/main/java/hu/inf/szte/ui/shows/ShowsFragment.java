@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -33,6 +35,12 @@ public class ShowsFragment extends Fragment implements ShowsAdapter.OnShowClickL
 
         binding = FragmentShowsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        Animation fadeInAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fade);
+
+        // Start the animation
+        root.startAnimation(fadeInAnimation);
+
         RecyclerView recyclerView = binding.recyclerView;
         int spanCount = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 4 : 2;
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), spanCount);

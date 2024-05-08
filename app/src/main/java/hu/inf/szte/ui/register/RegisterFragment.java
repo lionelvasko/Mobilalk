@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -41,6 +43,11 @@ public class RegisterFragment extends Fragment {
 
         binding = FragmentRegisterBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        Animation fadeInAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fade);
+
+        // Start the animation
+        root.startAnimation(fadeInAnimation);
 
         final EditText usernameEditText = binding.email;
         final EditText passwordEditText = binding.password;

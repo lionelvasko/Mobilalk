@@ -16,7 +16,7 @@
         android:id="@+id/datetime_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Release Date"
+        android:hint="Show Time"
         android:focusable="false"
         android:clickable="true" />
 

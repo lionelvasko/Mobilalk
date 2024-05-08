@@ -9,6 +9,8 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -48,6 +50,11 @@ public class AddShowFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_addshow, container, false);
+
+        Animation fadeInAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fade);
+
+        // Start the animation
+        root.startAnimation(fadeInAnimation);
 
         viewModel = new ViewModelProvider(this).get(AddShowViewModel.class);
 

@@ -8,7 +8,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import hu.inf.szte.R;
 import hu.inf.szte.model.Ticket;
@@ -33,7 +36,17 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
     public void onBindViewHolder(@NonNull TicketViewHolder holder, int position) {
         Ticket ticket = tickets.get(position);
         holder.ticketMovie.setText(ticket.getMovie());
-        holder.ticketDate.setText(ticket.getDate().toString());
+
+        // Create a SimpleDateFormat object with your desired date format
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+        // Convert the Timestamp to a Date
+        Date date = ticket.getDate().toDate();
+
+        // Format the date using the SimpleDateFormat object
+        String formattedDate = dateFormat.format(date);
+
+        holder.ticketDate.setText(formattedDate);
         holder.ticketSeats.setText(ticket.getSeats().toString());
     }
 
