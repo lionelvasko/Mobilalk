@@ -149,6 +149,9 @@ public class MainActivity extends AppCompatActivity {
 
         updateNavigationViewMenu();
         updateUserInfo(); // Add this line
+
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        navController.navigate(R.id.nav_movies);
     }
 
     public void updateUserInfo() {
