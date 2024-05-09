@@ -1,10 +1,6 @@
 package hu.inf.szte.model;
 
-import android.media.tv.TimelineRequest;
-
-import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.Exclude;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,20 +46,6 @@ public class Show implements Serializable {
 
     public void setSeat(int index, boolean value) {
         seats.set(index, value);
-    }
-
-    public int getFreeSeats() {
-        int freeSeats = 0;
-        for (Boolean seat : seats) {
-            if (!seat) {
-                freeSeats++;
-            }
-        }
-        return freeSeats;
-    }
-
-    public int getReservedSeats() {
-        return seats.size() - getFreeSeats();
     }
 
     @Exclude
