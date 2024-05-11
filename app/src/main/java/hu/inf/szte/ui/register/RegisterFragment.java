@@ -73,6 +73,11 @@ public class RegisterFragment extends Fragment {
             String phone = phoneEditText.getText().toString();
             String address = addressEditText.getText().toString();
 
+            if(email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty() || name.isEmpty() || phone.isEmpty() || address.isEmpty()) {
+                Toast.makeText(getContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             if(!password.equals(repeatPassword)) {
                 Toast.makeText(getContext(), "Passwords do not match", Toast.LENGTH_SHORT).show();
                 return;
