@@ -38,6 +38,12 @@ public class LoginFragment extends Fragment {
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
+            if(email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(getContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
             loginViewModel.authenticateUser(email, password, task -> {
                 if (task.isSuccessful()) {
                     // Sign in successful, navigate to the next page
